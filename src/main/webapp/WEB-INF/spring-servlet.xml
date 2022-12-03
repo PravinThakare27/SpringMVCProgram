@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xsi:schemaLocation="  
+            http://www.springframework.org/schema/beans  
+            http://www.springframework.org/schema/beans/spring-beans.xsd  
+            http://www.springframework.org/schema/context  
+           
+http://www.springframework.org/schema/context/spring-context.xsd  
+            http://www.springframework.org/schema/mvc  
+            http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<context:component-scan base-package="org.spring.controller"></context:component-scan>
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="ds">
+
+		<property value="com.mysql.jdbc.Driver" name="driverClassName" />
+
+		<property value="jdbc:mysql://localhost:3306/newdata" name="url" />
+
+		<property value="root" name="username" />
+
+		<property value="Pthakare@27" name="password" />
+
+	</bean>
+	<bean class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" id="mysessionFactory">
+
+		<property name="dataSource" ref="ds" />
+
+		<property name="annotatedClasses">
+
+
+			<list>
+
+				<value>org.spring.pojo.employee</value>
+
+			</list>
+
+		</property>
+		<property name="hibernateProperties">
+
+
+			<props>
+
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+
+				<prop key="hibernate.show_sql">true</prop>
+
+				<prop key="mappingClass">org.spring.pojo.employee</prop>
+
+			</props>
+
+		</property>
+
+	</bean>
+
+
+	<bean class="org.springframework.orm.hibernate3.HibernateTemplate" id="template">
+
+		<property name="sessionFactory" ref="mysessionFactory" />
+
+	</bean>
+	
+
+
+<bean id="subjectbean" class="org.spring.pojo.employee">
+
+</bean>
+
+<bean id="subjectdao" class="org.spring.controller.ServicePro" >
+<property name="template" ref="template"/>
+
+
+</bean>
+
+
+	<!-- 	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="ds">
+
+		<property value="com.mysql.jdbc.Driver" name="driverClassName" />
+
+		<property value="jdbc:mysql://localhost:3306/newdata" name="url" />
+
+		<property value="root" name="username" />
+
+		<property value="Pthakare@27" name="password" />
+
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="ds"></property>
+	</bean>
+
+
+	<bean id="StudentDao" class="org.spring.controller.ServicePro">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	<bean id="StudentPojo" class="org.spring.pojo.employee"></bean>-->
+
+</beans>
